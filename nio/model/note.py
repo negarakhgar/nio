@@ -8,6 +8,9 @@ class Note:
         self.content = content
         self.metadata = metadata
 
+    def __repr__(self):
+        return f"Note: {self.title}, {self.content}"
+
     def save(self, con):
         q = """
         INSERT INTO notes (title, content) VALUES (?, ?);
@@ -15,3 +18,17 @@ class Note:
         c = con.cursor()
         c.execute(q, (self.title, self.content))
         con.commit()
+
+    @staticmethod
+    def loading(title: str, con):
+        q = """
+        select title ,content from notes where title =? ;
+        """
+        c = con.cursor()
+        c.execute(q, [title])
+        r = c.fetchone()
+        if len(r) == 0:
+            return None
+
+        title, content = r
+        return Note(title, content, metadata=None)
