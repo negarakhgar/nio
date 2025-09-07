@@ -18,7 +18,8 @@ with open("migrations/setup.sql") as m:
 
 app = falcon.App()
 s = Server(con)
-app.add_route("/note/{title}", s)
+app.add_route("/note", s)
+app.add_route("/note/{title}", s, suffix="title")
 
 httpd = simple_server.make_server("127.0.0.1", 8000, app)
 httpd.serve_forever()
