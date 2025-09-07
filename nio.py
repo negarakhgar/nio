@@ -1,7 +1,11 @@
+from wsgiref import simple_server
 from nio.model.note import Note
+from nio.server import Server
 import sqlite3
+import falcon
 
 con = sqlite3.connect("nio.db")
+
 with open("migrations/setup.sql") as m:
     con.executescript(m.read())
 
@@ -9,8 +13,14 @@ with open("migrations/setup.sql") as m:
 # n = Note(title="email", content="negar", metadata=dict())
 # n.save(con)
 
-n = Note.loading("email", con)
-print(n)
+# n = Note.loading(title="email", con=con)
+# print(n)
 
+app = falcon.App()
+s = Server(con)
+app.add_route("/note/{title}", s)
+
+httpd = simple_server.make_server("127.0.0.1", 8000, app)
+httpd.serve_forever()
 
 con.close()

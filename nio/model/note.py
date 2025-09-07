@@ -1,5 +1,4 @@
 from typing import Dict, List
-import sqlite3
 
 
 class Note:
@@ -27,7 +26,7 @@ class Note:
         c = con.cursor()
         c.execute(q, [title])
         r = c.fetchone()
-        if len(r) == 0:
+        if r is None or len(r) == 0:
             return None
 
         title, content = r
