@@ -18,3 +18,17 @@ class Server:
 
         n = Note(title=obj["title"], content=obj["content"], metadata={})
         n.save(con=self.con)
+
+    def on_get_list(self, req, res):
+        q = """
+            select title from notes ;
+            """
+
+        c = self.con.cursor()
+        c.execute(q, [])
+        r = c.fetchall()
+
+        if r is None:
+            r = []
+
+        res.media = [j for i in r for j in i]

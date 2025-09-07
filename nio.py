@@ -20,6 +20,7 @@ app = falcon.App()
 s = Server(con)
 app.add_route("/note", s)
 app.add_route("/note/{title}", s, suffix="title")
+app.add_route("/notes", s, suffix="list")
 
 httpd = simple_server.make_server("127.0.0.1", 8000, app)
 httpd.serve_forever()
