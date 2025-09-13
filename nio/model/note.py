@@ -37,13 +37,22 @@ class Note:
     @staticmethod
     def loading(title: str, con):
         q = """
-        select title ,content from notes where title =? ;
+        
+        select title, content, meta_key, meta_value 
+        from notes 
+        outer join metadata 
+        on metadata.title=notes.title 
+        where title = ?;
         """
         c = con.cursor()
         c.execute(q, [title])
-        r = c.fetchone()
+        r = c.fetchall()
         if r is None or len(r) == 0:
             return None
 
-        title, content = r
-        return Note(title, content, metadata=None)
+        title, content, _, _ = r[0]
+        metadata = {
+            meta_key: meta_value for _title, _content, meta_key, meta_value in r
+        }
+
+        return Note(title, content, metadata)

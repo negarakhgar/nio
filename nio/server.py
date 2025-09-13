@@ -16,7 +16,7 @@ class Server:
     def on_post(self, req, res):
         obj = req.get_media()
 
-        n = Note(title=obj["title"], content=obj["content"], metadata={})
+        n = Note(title=obj["title"], content=obj["content"], metadata=obj["metadata"])
         n.save(con=self.con)
 
     def on_get_list(self, req, res):
