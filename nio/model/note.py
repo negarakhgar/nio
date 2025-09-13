@@ -35,6 +35,21 @@ class Note:
         con.commit()
 
     @staticmethod
+    def get_titles(con):
+        q = """
+            select title from notes ;
+            """
+
+        c = con.cursor()
+        c.execute(q, [])
+        r = c.fetchall()
+
+        if r is None:
+            r = []
+
+        return [j for i in r for j in i]
+
+    @staticmethod
     def loading(title: str, con):
         q = """
         
