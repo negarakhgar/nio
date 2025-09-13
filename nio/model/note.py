@@ -71,3 +71,23 @@ class Note:
         }
 
         return Note(title, content, metadata)
+
+    @staticmethod
+    def search(keyword: str, con):
+        q = """
+         select title 
+         from notes 
+         where ( 
+            title LIKE  ?
+            OR 
+            content LIKE ?
+         )
+        """
+
+        c = con.cursore()
+        c.execute(q, ["%" + keyword + "%"] * 2)
+        r = c.fetchall()
+        if r is None:
+            r = []
+
+        return [j for i in r for j in i]

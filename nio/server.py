@@ -21,3 +21,8 @@ class Server:
 
     def on_get_list(self, req, res):
         res.media = Note.get_titles(con=self.con)
+
+    def on_post_search(self, req, res):
+        obj = req.get_media()
+
+        res.media = Note.search(keyword=obj["keyword"], con=self.con)
