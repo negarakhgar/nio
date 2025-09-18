@@ -1,9 +1,10 @@
 from nio.model.note import Note
+from nio.app import App
 
 
-class Server:
+class Server(App):
     def __init__(self, con):
-        self.con = con
+        super().__init__(con)
 
     def on_get_title(self, req, res, title: str):
         n = Note.loading(title=title, con=self.con)
