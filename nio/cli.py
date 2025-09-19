@@ -7,7 +7,11 @@ class Cli(App):
         super().__init__(con)
 
     def ls(self):
-        return Note.get_titles(con=self.con)
+        for title in Note.get_titles(con=self.con):
+            print(title)
 
     def print_help():
         pass
+
+    def read(self, title: str):
+        print(Note.loading(title, self.con))

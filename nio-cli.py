@@ -3,6 +3,7 @@ import sqlite3
 import sys
 
 from nio.cli import Cli
+# for creat application
 
 con = sqlite3.connect("nio.db")
 
@@ -21,8 +22,12 @@ match len(sys.argv):
         match sys.argv[1]:
             case "add":
                 pass
-            case "load":
+            case "read":
+                title = sys.argv[2]
+                cli.read(title)
+
+                pass
+            case "search":
                 pass
             case "ls":
-                for title in cli.ls():
-                    print(title)
+                cli.ls()
