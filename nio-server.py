@@ -1,5 +1,4 @@
 from wsgiref import simple_server
-from nio.model.note import Note
 from nio.server import Server
 import sqlite3
 import falcon

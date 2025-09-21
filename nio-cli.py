@@ -1,4 +1,3 @@
-import os
 import sqlite3
 import sys
 
@@ -28,6 +27,7 @@ match len(sys.argv):
 
                 pass
             case "search":
-                pass
+                keyword = sys.argv[2]
+                cli.search(keyword)
             case "ls":
                 cli.ls()

@@ -15,3 +15,6 @@ class Cli(App):
 
     def read(self, title: str):
         print(Note.loading(title, self.con))
+
+    def search(self, keyword: str):
+        print(Note.search(keyword, self.con))
