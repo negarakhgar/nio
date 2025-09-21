@@ -36,3 +36,6 @@ search <keyword>
     def add(self, title, content, metadata):
         n = Note(title, content, metadata)
         n.save(self.con)
+
+    def delete(self, title):
+        Note.delete(title, self.con)

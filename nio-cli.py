@@ -38,3 +38,6 @@ match len(sys.argv):
                 cli.search(keyword)
             case "ls":
                 cli.ls()
+            case "delete":
+                title = sys.argv.pop(0)
+                cli.delete(title)

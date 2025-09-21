@@ -9,5 +9,5 @@ create table if not exists metadata    (
     meta_value text not null,
     
     UNIQUE (title, meta_key),
-    Foreign key (title) references notes (title)
+    Foreign key (title) references notes (title) ON DELETE CASCADE ON UPDATE CASCADE
 );

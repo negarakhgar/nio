@@ -14,6 +14,9 @@ class Server(App):
         else:
             res.media = {"title": n.title, "content": n.content}
 
+    def on_delete_title(self, req, res, title: str):
+        Note.delete(title, self.con)
+
     def on_post(self, req, res):
         obj = req.get_media()
 

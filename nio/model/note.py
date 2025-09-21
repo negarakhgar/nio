@@ -95,3 +95,12 @@ class Note:
             r = []
 
         return [j for i in r for j in i]
+
+    @staticmethod
+    def delete(title: str, con):
+        q = """
+        Delete from notes where title = ?
+        """
+        c = con.cursor()
+        c.execute(q, [title])
+        con.commit()
