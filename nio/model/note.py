@@ -24,15 +24,17 @@ class Note:
         c = con.cursor()
 
         q = """
-        INSERT INTO notes (title, content) VALUES (?, ?);
+        INSERT INTO notes (title, content) VALUES (?, ?)
+        on conflict(title) do update set content = ?;
         """
-        c.execute(q, (self.title, self.content))
+        c.execute(q, (self.title, self.content, self.content))
 
         for meta_key, meta_value in self.metadata.items():
             q = """
-            INSERT INTO metadata (title,meta_key,meta_value) VALUES (?,?,?);
+            INSERT INTO metadata (title,meta_key,meta_value) VALUES (?,?,?)
+            on conflict(title ,meta_key) do update set meta_value =?;
             """
-            c.execute(q, (self.title, meta_key, meta_value))
+            c.execute(q, (self.title, meta_key, meta_value, meta_value))
 
         con.commit()
 
