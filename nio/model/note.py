@@ -16,21 +16,25 @@ class Note:
         self.metadata = metadata
 
     def __repr__(self):
-        return f"Note: {self.title}, {self.content}"
+        return (
+            f"[Title: {self.title}, Content: {self.content}, Metadata: {self.metadata}]"
+        )
 
     def save(self, con):
         c = con.cursor()
 
         q = """
-        INSERT INTO notes (title, content) VALUES (?, ?);
+        INSERT INTO notes (title, content) VALUES (?, ?)
+        on conflict(title) do update set content = ?;
         """
-        c.execute(q, (self.title, self.content))
+        c.execute(q, (self.title, self.content, self.content))
 
         for meta_key, meta_value in self.metadata.items():
             q = """
-            INSERT INTO metadata (title,meta_key,meta_value) VALUES (?,?,?);
+            INSERT INTO metadata (title,meta_key,meta_value) VALUES (?,?,?)
+            on conflict(title ,meta_key) do update set meta_value =?;
             """
-            c.execute(q, (self.title, meta_key, meta_value))
+            c.execute(q, (self.title, meta_key, meta_value, meta_value))
 
         con.commit()
 
@@ -91,3 +95,12 @@ class Note:
             r = []
 
         return [j for i in r for j in i]
+
+    @staticmethod
+    def delete(title: str, con):
+        q = """
+        Delete from notes where title = ?
+        """
+        c = con.cursor()
+        c.execute(q, [title])
+        con.commit()
