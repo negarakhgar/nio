@@ -53,11 +53,11 @@ class Note:
     def loading(title: str, con):
         q = """
         
-        select title, content, meta_key, meta_value 
-        from notes 
-        outer join metadata 
-        on metadata.title=notes.title 
-        where title = ?;
+        select notes.title, content, meta_key, meta_value 
+        from notes
+        full join metadata 
+        on metadata.title = notes.title 
+        where notes.title = ?;
         """
         c = con.cursor()
         c.execute(q, [title])
