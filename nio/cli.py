@@ -18,3 +18,7 @@ class Cli(App):
 
     def search(self, keyword: str):
         print(Note.search(keyword, self.con))
+
+    def add(self, title, content, metadata):
+        n = Note(title, content, metadata)
+        n.save(self.con)

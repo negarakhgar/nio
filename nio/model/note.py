@@ -16,7 +16,9 @@ class Note:
         self.metadata = metadata
 
     def __repr__(self):
-        return f"Note: {self.title}, {self.content}"
+        return (
+            f"[Title: {self.title}, Content: {self.content}, Metadata: {self.metadata}]"
+        )
 
     def save(self, con):
         c = con.cursor()

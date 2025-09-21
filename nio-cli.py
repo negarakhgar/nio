@@ -17,17 +17,24 @@ match len(sys.argv):
     case 1:
         cli.print_help()
     case _:
-        # print("Command:", sys.argv[1])
-        match sys.argv[1]:
-            case "add":
-                pass
-            case "read":
-                title = sys.argv[2]
-                cli.read(title)
+        sys.argv.pop(0)
 
-                pass
+        # print("Command:", sys.argv[1])
+        match sys.argv.pop(0):
+            case "add":
+                title = sys.argv.pop(0)
+                content = sys.argv.pop(0)
+                metadata = {}
+                while len(sys.argv) > 0:
+                    key = sys.argv.pop(0)
+                    value = sys.argv.pop(0)
+                    metadata[key] = value
+                cli.add(title, content, metadata)
+            case "read":
+                title = sys.argv.pop(0)
+                cli.read(title)
             case "search":
-                keyword = sys.argv[2]
+                keyword = sys.argv.pop(0)
                 cli.search(keyword)
             case "ls":
                 cli.ls()
