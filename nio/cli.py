@@ -10,8 +10,22 @@ class Cli(App):
         for title in Note.get_titles(con=self.con):
             print(title)
 
+    @staticmethod
     def print_help():
-        pass
+        print("""nio-cli
+author :negar akhgar 
+cli application for taking notes 
+
+commands:
+ls
+        list of the save notes 
+add <title> <content> [<metadata_key> <metadata_value>]+
+        add notes 
+read <title>
+        read a saved note
+search <keyword>
+        search by keyword                              
+        """)
 
     def read(self, title: str):
         print(Note.loading(title, self.con))
