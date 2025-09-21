@@ -24,7 +24,9 @@ add <title> <content> [<metadata_key> <metadata_value>]+
 read <title>
         read a saved note
 search <keyword>
-        search by keyword                              
+        search by keyword        
+delte <title>
+        delete note by title                       
         """)
 
     def read(self, title: str):
